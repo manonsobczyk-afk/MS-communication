@@ -1,0 +1,291 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Mail, Phone, MapPin, Linkedin, Download, ExternalLink, BookOpen, Megaphone, LayoutGrid, PenTool, FileText, Newspaper } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+
+// ----------
+// PROFIL
+// ----------
+const PROFILE = {
+  name: "Manon Sobczyk",
+  title: "Conceptrice-rédactrice freelance — Communication & Médiation culturelle",
+  location: "Île-de-France",
+  email: "manon.sobczyk@live.fr",
+  phone: "+33 6 15 33 90 92",
+  linkedin: "https://sh1.sendinblue.com/afhx1hqgslpfe.html?t=1687256789",
+  summary:
+    "Je crée des contenus qui donnent du sens aux projets : articles, newsletters, supports print et recommandations culturelles. Mon objectif : rendre l’information claire, engageante et inspirante.",
+};
+
+const KEY_SKILLS = [
+  "Rédaction & storytelling",
+  "Interviews & articles",
+  "Newsletters",
+  "Réseaux sociaux",
+  "Création print",
+  "Mise en page (InDesign, Canva)",
+  "Communication interne",
+];
+
+const HIGHLIGHTS = [
+  {
+    icon: <Megaphone className="w-5 h-5" />,
+    title: "Chœur à l’ouvrage — Newsletter & articles",
+    text: "Conception éditoriale, rédaction d’articles de fond et interviews pour valoriser les projets soutenus.",
+  },
+  {
+    icon: <LayoutGrid className="w-5 h-5" />,
+    title: "Communication territoriale",
+    text: "Articles pour sites web, réseaux sociaux, création de supports print (affiches, plaquettes, journaux municipaux).",
+  },
+  {
+    icon: <BookOpen className="w-5 h-5" />,
+    title: "Médiathèque",
+    text: "Rédaction de coups de cœur littéraires pour valoriser les collections et fidéliser les lecteurs.",
+  },
+];
+
+const SERVICES = [
+  {
+    icon: <FileText className="w-5 h-5" />,
+    title: "Rédaction & storytelling",
+    desc: "Articles, interviews, newsletters, dossiers et contenus institutionnels ou culturels.",
+  },
+  {
+    icon: <PenTool className="w-5 h-5" />,
+    title: "Création print",
+    desc: "Affiches, flyers, plaquettes, journaux municipaux, mise en page et suivi de fabrication.",
+  },
+  {
+    icon: <Newspaper className="w-5 h-5" />,
+    title: "Stratégie éditoriale",
+    desc: "Accompagnement dans la structuration et la diffusion de messages adaptés aux publics.",
+  },
+];
+
+const PROJECTS = [
+  {
+    title: "Newsletter — Chœur à l’ouvrage",
+    desc: "Conception éditoriale, rédaction d’articles et interviews (ex. Christophe Loiseau).",
+    link: "#",
+  },
+  {
+    title: "Articles & fiches projets — Chœur à l’ouvrage",
+    desc: "Valorisation de projets sur le site (ex. Haut-parleurs, Maison du Geste et de l’Image).",
+    link: "#",
+  },
+  {
+    title: "Communication territoriale — Print",
+    desc: "Création d’affiches, flyers, plaquettes culturelles, journaux municipaux.",
+    link: "#",
+  },
+  {
+    title: "Communication territoriale — Web & réseaux sociaux",
+    desc: "Articles pour site municipal, publications Facebook/Instagram/LinkedIn.",
+    link: "#",
+  },
+  {
+    title: "Médiathèque — Coups de cœur littéraires",
+    desc: "Rédaction de recommandations pour romans, BD et jeunesse.",
+    link: "#",
+  },
+];
+
+const EDUCATION = [
+  {
+    school: "Master Communication interculturelle et ingénierie de projets",
+    place: "Université Sorbonne Nouvelle | 2022 – 2023",
+  },
+  {
+    school: "Master 1 Information - Communication (mémoire sur l’écoute musicale)",
+    place: "Université Sorbonne Nouvelle | 2021 – 2022",
+  },
+  {
+    school: "Licence Médiation culturelle (création du fanzine Le 48 Pages)",
+    place: "Université Sorbonne Nouvelle | 2019 – 2021",
+  },
+  {
+    school: "DEUG LLCE anglais",
+    place: "Université Sorbonne Nouvelle | 2017 – 2019",
+  },
+];
+
+export default function Portfolio() {
+  const [active, setActive] = useState("about");
+
+  const navItems = [
+    { id: "about", label: "Profil" },
+    { id: "skills", label: "Compétences" },
+    { id: "services", label: "Services" },
+    { id: "projects", label: "Projets" },
+    { id: "education", label: "Formation" },
+    { id: "contact", label: "Contact" },
+  ];
+
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setActive(id);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-white to-slate-50 text-slate-800">
+      {/* Header */}
+      <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-slate-900 text-white grid place-items-center font-semibold">MS</div>
+            <div>
+              <div className="font-semibold">{PROFILE.name}</div>
+              <div className="text-sm text-slate-500">{PROFILE.title}</div>
+            </div>
+          </div>
+          <nav className="hidden md:flex gap-2">
+            {navItems.map((it) => (
+              <Button key={it.id} variant={active === it.id ? "default" : "ghost"} className="rounded-2xl" onClick={() => scrollTo(it.id)}>
+                {it.label}
+              </Button>
+            ))}
+          </nav>
+          <div className="flex gap-2">
+            <Button className="rounded-2xl" asChild>
+              <a href="#" download>
+                <Download className="w-4 h-4 mr-2" /> Télécharger le CV
+              </a>
+            </Button>
+            <Button variant="outline" className="rounded-2xl" asChild>
+              <a href={PROFILE.linkedin} target="_blank" rel="noreferrer">
+                <Linkedin className="w-4 h-4 mr-2" /> LinkedIn
+              </a>
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section className="max-w-6xl mx-auto px-4 pt-10 pb-6" id="about">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="grid md:grid-cols-3 gap-6 items-stretch">
+          <Card className="md:col-span-2 rounded-2xl">
+            <CardHeader>
+              <CardTitle className="text-2xl">{PROFILE.title}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="leading-relaxed">{PROFILE.summary}</p>
+              <div className="flex flex-wrap gap-2 text-sm text-slate-600">
+                <span className="inline-flex items-center gap-1"><MapPin className="w-4 h-4" /> {PROFILE.location}</span>
+                <a className="inline-flex items-center gap-1 hover:underline" href={`mailto:${PROFILE.email}`}><Mail className="w-4 h-4" /> {PROFILE.email}</a>
+                <a className="inline-flex items-center gap-1 hover:underline" href={`tel:${PROFILE.phone}`}><Phone className="w-4 h-4" /> {PROFILE.phone}</a>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-2xl">
+            <CardHeader>
+              <CardTitle className="text-xl">En un coup d'œil</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {HIGHLIGHTS.map((h, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div className="p-2 rounded-xl bg-slate-100">{h.icon}</div>
+                  <div>
+                    <div className="font-medium">{h.title}</div>
+                    <div className="text-sm text-slate-600">{h.text}</div>
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        </motion.div>
+      </section>
+
+      {/* Skills */}
+      <section className="max-w-6xl mx-auto px-4 py-6" id="skills">
+        <Card className="rounded-2xl">
+          <CardHeader>
+            <CardTitle className="text-xl">Compétences clés</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-wrap gap-2">
+            {KEY_SKILLS.map((s, i) => (
+              <Badge key={i} className="rounded-full text-sm px-3 py-1">{s}</Badge>
+            ))}
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Services */}
+      <section className="max-w-6xl mx-auto px-4 py-6" id="services">
+        <Card className="rounded-2xl">
+          <CardHeader>
+            <CardTitle className="text-xl">Services proposés</CardTitle>
+          </CardHeader>
+          <CardContent className="grid md:grid-cols-3 gap-4">
+            {SERVICES.map((s, i) => (
+              <div key={i} className="p-4 rounded-2xl border hover:shadow-md transition group">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="p-2 rounded-xl bg-slate-100">{s.icon}</div>
+                  <div className="font-medium">{s.title}</div>
+                </div>
+                <div className="text-sm text-slate-600">{s.desc}</div>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Projects */}
+      <section className="max-w-6xl mx-auto px-4 py-6" id="projects">
+        <Card className="rounded-2xl">
+          <CardHeader>
+            <CardTitle className="text-xl">Projets sélectionnés</CardTitle>
+          </CardHeader>
+          <CardContent className="grid md:grid-cols-2 gap-4">
+            {PROJECTS.map((p, i) => (
+              <div key={i} className="p-4 rounded-2xl border hover:shadow-md transition group">
+                <div className="font-medium mb-1">{p.title}</div>
+                <div className="text-sm text-slate-600 mb-3">{p.desc}</div>
+                <a href={p.link} className="inline-flex items-center gap-1 text-sm hover:underline" target="_blank" rel="noreferrer">
+                  Voir le projet <ExternalLink className="w-4 h-4" />
+                </a>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Education */}
+      <section className="max-w-6xl mx-auto px-4 py-6" id="education">
+        <Card className="rounded-2xl">
+          <CardHeader>
+            <CardTitle className="text-xl">Formation</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {EDUCATION.map((ed, i) => (
+              <div key={i}>
+                <div className="font-medium">{ed.school}</div>
+                <div className="text-sm text-slate-600">{ed.place}</div>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Contact */}
+      <section className="max-w-6xl mx-auto px-4 py-10" id="contact">
+        <Card className="rounded-2xl">
+          <CardHeader>
+            <CardTitle className="text-xl">Contact</CardTitle>
+          </CardHeader>
+          <CardContent className="grid md:grid-cols-3 gap-4">
+            <div className="flex items-center gap-2 text-slate-700"><Mail className="w-4 h-4" /> {PROFILE.email}</div>
+            <div className="flex items-center gap-2 text-slate-700"><Phone className="w-4 h-4" /> {PROFILE.phone}</div>
+            <a className="flex items-center gap-2 hover:underline" href={PROFILE.linkedin} target="_blank" rel="noreferrer"><Linkedin className="w-4 h-4" /> LinkedIn</a>
+          </CardContent>
+        </Card>
+        <footer className="text-center text-xs text-slate-500 py-6">
+          © {new Date().getFullYear()} {PROFILE.name} — Portfolio.
+        </footer>
+      </section>
+    </div>
+  );
+}
